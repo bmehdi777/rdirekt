@@ -1,8 +1,9 @@
 package server
 
 import (
-	"net/http"
 	"log"
+	"net/http"
+	"net/http/httputil"
 )
 
 func httpServe() {
@@ -19,6 +20,17 @@ func healthCheck(writter http.ResponseWriter, request *http.Request) {
 }
 
 func redirectTcp(writter http.ResponseWriter, request *http.Request) {
+	bytes, err := httputil.DumpRequest(request, true)
+	if err != nil {
+		writter.WriteHeader(http.StatusInternalServerError)
+		log.Fatal(err)
+		return
+	}
+
+	log.Println("before")
+	globalChannel <- bytes
+	log.Println("after")
+
 	writter.WriteHeader(http.StatusOK)
 	writter.Write([]byte("Endpoint reached"))
 }
