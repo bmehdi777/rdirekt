@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	gordirekt.StartCmd()
+	gordirekt.Execute()
 }
