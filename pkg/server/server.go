@@ -1,9 +1,13 @@
 package server
 
-var globalChannel chan []byte
+import (
+	"net/http"
+)
+
+var globalChannel chan http.Request
 
 func NewServer() {
-	globalChannel = make(chan []byte)
+	globalChannel = make(chan http.Request)
 	go httpServe()
 	tcpServe()
 }

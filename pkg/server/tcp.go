@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 	"net"
+	"net/http/httputil"
 )
 
 func tcpServe() {
@@ -20,7 +21,13 @@ func tcpServe() {
 		}
 
 		go func(c net.Conn) {
-			bytes := <-globalChannel
+			request := <-globalChannel
+
+			bytes, err := httputil.DumpRequest(&request, true)
+			if err != nil {
+				log.Fatal("Failed to dump request to bytes")
+			}
+
 			conn.Write(bytes)
 		}(conn)
 

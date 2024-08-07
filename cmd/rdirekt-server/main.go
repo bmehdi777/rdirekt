@@ -1,7 +1,7 @@
 package main
 
 import (
-	gordirekt "bmehdi/goredirekt/pkg/server"
+	gordirekt "bmehdi/rdirekt/pkg/server"
 )
 
 func main() {
